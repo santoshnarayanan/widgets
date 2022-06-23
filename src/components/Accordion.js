@@ -3,6 +3,7 @@ import React, {useState} from "react";
 
 
 const Accordion = ({items}) =>{
+    //useState in functional component
     const [activeIndex, setActiveIndex]= useState(null);
 
     const onTitleClick = (index) =>{

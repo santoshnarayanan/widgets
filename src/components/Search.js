@@ -3,9 +3,11 @@ import axios from "axios";
 
 const Search = () => {
 
-    const [term, setTerm] = useState('programming');
+    const [term, setTerm] = useState('programming'); // default value
     const [results, setResults] = useState([]);
+    const timeout = 1000
 
+    // component is rendered whenever term value is changed
     useEffect(() =>{
         const search = async () => {
             const {data} = await axios.get('https://en.wikipedia.org/w/api.php',{
@@ -20,7 +22,19 @@ const Search = () => {
 
             setResults(data.query.search);
         };
-        search();
+
+        //if user does not type anything with 500ms
+        const timeoutId = setTimeout(() => {
+            //if term is defined in search string
+            if(term){
+                search();
+            }
+        }, timeout);
+        
+        //clear previous timeout
+        return () =>{
+            clearTimeout(timeoutId);
+        }
         
     },[term]);
 

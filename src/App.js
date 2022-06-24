@@ -1,28 +1,44 @@
 import React from "react";
-import Accordion from "./components/Accordion";
+//import Accordion from "./components/Accordion";
 import Search from "./components/Search";
+import Dropdown from "./components/Dropdown";
 
-const items =[
+// const items =[
+//     {
+//         title: 'What is React?',
+//         content: 'React is javascript front-end framework'
+//     },
+//     {
+//         title: 'Why use React?',
+//         content: 'React is favourite js library'
+//     },
+//     {
+//         title: 'How do you use React?',
+//         content: 'React is used by creating components'
+//     }
+
+// ];
+
+const options = [
     {
-        title: 'What is React?',
-        content: 'React is javascript front-end framework'
+        label:'The Color Red',
+        value:'Red'
     },
     {
-        title: 'Why use React?',
-        content: 'React is favourite js library'
+        label:'The Color Green',
+        value:'Green'
     },
     {
-        title: 'How do you use React?',
-        content: 'React is used by creating components'
+        label:'The Color Blue',
+        value:'Blue'
     }
-
 ];
 
 
 const App = () => {
     return (
     <div>
-        <Search />
+        <Dropdown options ={options} />
     </div>
     );
 };

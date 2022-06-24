@@ -4,11 +4,23 @@ import axios from "axios";
 const Search = () => {
 
     const [term, setTerm] = useState('programming'); // default value
+    const [debouncedTerm,setDebouncedTerm] = useState(term);
     const [results, setResults] = useState([]);
     const timeout = 1000
 
-    // component is rendered whenever term value is changed
-    useEffect(() =>{
+    useEffect(()=>{
+        const timerId = setTimeout(()=>{
+            setDebouncedTerm(term);
+        },timeout);
+
+        return()=>{
+            clearTimeout(timerId);
+        };
+
+    },[term]);
+
+    //#region searching with text input
+    useEffect(()=>{
         const search = async () => {
             const {data} = await axios.get('https://en.wikipedia.org/w/api.php',{
                 params:{
@@ -16,30 +28,15 @@ const Search = () => {
                     list: 'search',
                     origin:'*',
                     format:'json',
-                    srsearch: term,
+                    srsearch: debouncedTerm,
                 },
             });
-
             setResults(data.query.search);
         };
-
-        if(term && !results.length){
-            search();
-        }else{
-                //if user does not type anything with 1second
-                const timeoutId = setTimeout(() => {
-                    //if term is defined in search string
-                    if(term){
-                        search();
-                    }
-                }, timeout);
-
-                //clear previous timeout
-                return () =>{
-                    clearTimeout(timeoutId);
-                }
-        }
-    },[term, results]);
+        search();
+    },[debouncedTerm]);
+    //#endregion
+    
 
     const renderedResults = results.map((result)=>{
         return(

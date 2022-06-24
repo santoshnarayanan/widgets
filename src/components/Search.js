@@ -23,20 +23,23 @@ const Search = () => {
             setResults(data.query.search);
         };
 
-        //if user does not type anything with 500ms
-        const timeoutId = setTimeout(() => {
-            //if term is defined in search string
-            if(term){
-                search();
-            }
-        }, timeout);
-        
-        //clear previous timeout
-        return () =>{
-            clearTimeout(timeoutId);
+        if(term && !results.length){
+            search();
+        }else{
+                //if user does not type anything with 1second
+                const timeoutId = setTimeout(() => {
+                    //if term is defined in search string
+                    if(term){
+                        search();
+                    }
+                }, timeout);
+
+                //clear previous timeout
+                return () =>{
+                    clearTimeout(timeoutId);
+                }
         }
-        
-    },[term]);
+    },[term, results]);
 
     const renderedResults = results.map((result)=>{
         return(

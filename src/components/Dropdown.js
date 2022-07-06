@@ -1,7 +1,18 @@
-import React,{useState} from "react";
+import React,{useState, useEffect, useRef} from "react";
 
 const Dropdown =({options, selected, onSelectedChange})=>{
     const[open, setOpen] = useState(false);
+    const ref = useRef();
+
+    useEffect(()=> {
+        document.body.addEventListener('click', ()=>{
+            // eslint-disable-next-line no-restricted-globals
+            if(ref.current.contains(event.target)){
+                return;
+            }
+            setOpen(false);
+        },{capture:true}); // capture option to be used if version of React is >= 17
+    },[]);
 
     const renderedOptions = options.map((option)=>{
         //if the selected value is already present in list then do not render
@@ -16,8 +27,12 @@ const Dropdown =({options, selected, onSelectedChange})=>{
             </div>
         );
     });
+
+    //! returns current element clicked on the form using ref
+    //console.log(ref.current) 
+
     return (
-        <div className="ui form">
+        <div ref={ref} className="ui form">
             <div className="field">
                 <label className="label">Select a Color</label>
                 <div onClick={()=> setOpen(!open)} 

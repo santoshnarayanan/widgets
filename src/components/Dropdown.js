@@ -5,13 +5,21 @@ const Dropdown =({options, selected, onSelectedChange})=>{
     const ref = useRef();
 
     useEffect(()=> {
-        document.body.addEventListener('click', ()=>{
-            // eslint-disable-next-line no-restricted-globals
+
+        const onBodyClick = (event)=>{
             if(ref.current.contains(event.target)){
                 return;
             }
             setOpen(false);
-        },{capture:true}); // capture option to be used if version of React is >= 17
+        }
+
+        document.body.addEventListener('click', onBodyClick ); 
+
+        //! clean up when dropdown is removed from DOM
+        return ()=>{
+            //! remove click event listener
+            document.body.removeEventListener('click',onBodyClick);
+        };
     },[]);
 
     const renderedOptions = options.map((option)=>{

@@ -1,9 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Route = ({path, children}) => {
+
+    const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
     useEffect(()=>{
         const onLocationChange  = () =>{
-            console.log("Location change");
+            setCurrentPath(window.location.pathname);
         };
 
         window.addEventListener('popstate',onLocationChange);
@@ -13,7 +16,7 @@ const Route = ({path, children}) => {
         };
     },[]);
 
-    return window.location.pathname === path ? children : null;
+    return currentPath === path ? children : null;
 
     
 };

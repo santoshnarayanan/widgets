@@ -4,6 +4,7 @@ import Search from "./components/Search";
 import Dropdown from "./components/Dropdown";
 import Translate from "./components/translate";
 import Route from "./components/Route";
+import Header from "./components/Header";
 
 const items =[
     {
@@ -42,6 +43,7 @@ const App = () => {
   //! Here items property is passed as children to Route
   return (
     <div>
+        <Header />
         <Route path="/">
           <Accordion  items={items}/> 
         </Route>

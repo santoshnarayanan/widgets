@@ -40,7 +40,7 @@ const options = [
 const App = () => {
   const [selected, setSelected] = useState(options[0]);
 
-  //! Here items property is passed as children to Route
+  //! Here items property (Accordion Node) is passed as children to Route
   return (
     <div>
         <Header />
